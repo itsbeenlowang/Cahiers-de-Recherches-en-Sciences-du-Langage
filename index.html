@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#07080a">
+  <title>CRSL · Cahiers de Recherches en Sciences du Langage</title>
+  <meta name="description" content="Revue scientifique du Département de Langue et Littérature Françaises, Université Mustapha Stambouli de Mascara. Lisez et téléchargez librement les articles des Cahiers de Recherches en Sciences du Langage.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CRSL · Cahiers de Recherches en Sciences du Langage">
+  <meta property="og:description" content="Revue scientifique en sciences du langage, textes littéraires et didactique. Articles en accès libre.">
+  <meta property="og:locale" content="fr_FR">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="skip">Aller au contenu</a>
+
+  <header class="site-header" id="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#accueil" aria-label="CRSL, accueil">
+        <span class="brand-mark" aria-hidden="true">
+          <span>CRSL</span>
+        </span>
+        <span class="brand-text">
+          <strong>Cahiers de Recherches en Sciences du Langage</strong>
+          <span data-i18n="brand.tagline">Revue de sciences du langage</span>
+        </span>
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Navigation principale" data-i18n-aria="nav.aria">
+        <a href="#accueil" data-i18n="nav.home">Accueil</a>
+        <a href="#a-propos" data-i18n="nav.about">La revue</a>
+        <a href="#numeros" data-i18n="nav.issues">Numéros</a>
+        <a href="#comite" data-i18n="nav.committee">Comité</a>
+        <a href="#soumission" data-i18n="nav.submission">Soumettre</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+      </nav>
+
+      <div class="header-controls">
+        <label class="sr-only" for="lang" data-i18n="lang.label">Langue</label>
+        <span class="lang-wrap">
+          <svg class="ico lang-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3.2 9h17.6M3.2 15h17.6M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
+          <select id="lang" class="select">
+            <option value="fr" lang="fr">Français</option>
+            <option value="en" lang="en">English</option>
+            <option value="ar" lang="ar">العربية</option>
+          </select>
+        </span>
+
+        <button class="icon-btn theme-btn" id="theme" type="button" aria-label="Changer de thème" data-i18n-aria="theme.toggle">
+          <svg class="ico ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M18.8 5.2l-1.7 1.7M6.9 17.1l-1.7 1.7"/></svg>
+          <svg class="ico ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 14.2A8.6 8.6 0 0 1 9.8 3.7a8.7 8.7 0 1 0 10.5 10.5Z"/></svg>
+        </button>
+
+        <button class="icon-btn menu-btn" id="menu" type="button" aria-label="Ouvrir le menu" data-i18n-aria="menu.open" aria-expanded="false" aria-controls="nav">
+          <svg class="ico ico-menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.5h17M3.5 12h17M3.5 17.5h17"/></svg>
+          <svg class="ico ico-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="accueil">
+      <div class="hero-ambient" aria-hidden="true">
+        <span class="orb orb-a"></span>
+        <span class="orb orb-b"></span>
+        <span class="ambient-grid"></span>
+      </div>
+
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="kicker hero-kicker">
+            <span data-i18n="hero.kicker">Revue scientifique · Université Mustapha Stambouli de Mascara</span>
+          </p>
+          <h1 class="hero-title">
+            <span class="hero-acronym" aria-hidden="true">CRSL</span>
+            <span class="hero-title-mask"><span id="hero-name">Cahiers de Recherches en Sciences du Langage</span></span>
+          </h1>
+          <p class="hero-lead" data-i18n="hero.lead">
+            Revue du Département de Langue et Littérature Françaises, consacrée aux sciences du langage,
+            aux textes littéraires et à la didactique. Tous les articles sont en accès libre.
+          </p>
+
+          <ul class="chips" aria-label="Identifiants de la revue">
+            <li><span data-i18n="hero.chip.issn">ISSN</span> 2992-0302</li>
+            <li><span data-i18n="hero.chip.eissn">EISSN</span> 2992-0647</li>
+            <li class="chip-open"><span class="dot" aria-hidden="true"></span><span data-i18n="hero.chip.open">Accès libre</span></li>
+          </ul>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#numeros" data-i18n="hero.ctaBrowse">Parcourir les numéros</a>
+            <a class="btn btn-ghost" href="#soumission" data-i18n="hero.ctaSubmit">Soumettre un article</a>
+          </div>
+        </div>
+
+        <aside class="issue-card" aria-labelledby="latest-label">
+          <p class="issue-card-top">
+            <span class="issue-card-dot" aria-hidden="true"></span>
+            <span id="latest-label" data-i18n="hero.latest">Dernier numéro</span>
+            <span class="issue-card-line" aria-hidden="true"></span>
+            <span id="latest-date">Mars 2026</span>
+          </p>
+
+          <div class="issue-cover" aria-hidden="true">
+            <div class="issue-cover-inner">
+              <span class="issue-cover-journal">CRSL</span>
+              <span class="issue-cover-no" id="latest-number">N° 04</span>
+              <span class="issue-cover-rule"></span>
+              <span class="issue-cover-text">Cahiers de Recherches<br>en Sciences du Langage</span>
+            </div>
+            <span class="issue-cover-spine"></span>
+          </div>
+
+          <div class="issue-card-meta">
+            <span id="latest-count">6 articles</span>
+            <span class="meta-dot" aria-hidden="true"></span>
+            <span>Universitas Mascarensis</span>
+          </div>
+
+          <button class="btn btn-soft btn-block" id="latest-read" type="button" data-i18n="hero.readLatest">
+            Lire le dernier numéro
+          </button>
+        </aside>
+      </div>
+
+      <div class="wrap">
+        <dl class="stats" aria-label="Chiffres clés">
+          <div class="stat">
+            <dt data-i18n="stats.issues">Numéros publiés</dt>
+            <dd id="stat-issues">4</dd>
+          </div>
+          <div class="stat">
+            <dt data-i18n="stats.articles">Articles en accès libre</dt>
+            <dd id="stat-articles">22</dd>
+          </div>
+          <div class="stat">
+            <dt data-i18n="stats.countries">Pays représentés</dt>
+            <dd id="stat-countries">9</dd>
+          </div>
+          <div class="stat">
+            <dt data-i18n="stats.founded">Année de création</dt>
+            <dd id="stat-founded">2023</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section class="section" id="a-propos">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="kicker" data-i18n="about.kicker">La revue</p>
+          <h2 data-i18n="about.title">Une revue au cœur des sciences du langage</h2>
+        </header>
+
+        <div class="about-grid">
+          <div class="prose">
+            <p data-i18n="about.p1">
+              Les Cahiers de Recherches en Sciences du Langage (CRSL) sont une revue scientifique affiliée au
+              Département de Langue et Littérature Françaises de la Faculté des Lettres et Langues de
+              l’Université Mustapha Stambouli de Mascara, en Algérie.
+            </p>
+            <p data-i18n="about.p2">
+              Les axes couverts sont l’analyse du discours, la sociolinguistique, la psycholinguistique,
+              la linguistique textuelle et l’analyse conversationnelle.
+            </p>
+            <p data-i18n="about.p3">
+              La revue ambitionne d’être un espace de réflexion et de partage entre chercheurs, dans le
+              respect des normes internationales d’éthique et de recherche académique.
+            </p>
+          </div>
+
+          <aside class="panel">
+            <h3 data-i18n="about.axesTitle">Domaines couverts</h3>
+            <p class="panel-lead" data-i18n="about.axesLead">
+              Une approche ouverte, des sciences du langage aux arts et aux Humanités.
+            </p>
+            <ul class="pill-list" id="domains"></ul>
+          </aside>
+        </div>
+
+        <div class="docs-block">
+          <div class="docs-head">
+            <div>
+              <h3 data-i18n="about.docsTitle">Documents de la revue</h3>
+              <p data-i18n="about.docsLead">
+                Présentation, fiche technique, guide aux auteurs et template.
+              </p>
+            </div>
+          </div>
+          <div class="docs-grid" id="documents"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ISSUES ================= -->
+    <section class="section section-alt" id="numeros">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="kicker" data-i18n="issues.kicker">Archives</p>
+          <h2 data-i18n="issues.title">Parcourir les numéros</h2>
+          <p class="section-lead" data-i18n="issues.lead">
+            Quatre numéros publiés entre 2023 et 2026.
+          </p>
+        </header>
+
+        <div class="toolbar" role="search">
+          <label class="search-field">
+            <span class="sr-only" data-i18n="issues.search">Rechercher</span>
+            <svg class="ico search-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.6"/><path d="M15.7 15.7 21 21"/></svg>
+            <input id="search" type="search" autocomplete="off" spellcheck="false"
+                   placeholder="Rechercher un titre, un auteur, un mot-clé…"
+                   data-i18n-placeholder="issues.search">
+            <kbd class="search-kbd" aria-hidden="true">/</kbd>
+          </label>
+
+          <div class="filters" id="volume-filters" role="group" aria-label="Filtrer par numéro"></div>
+
+          <div class="toolbar-meta">
+            <span id="results-count" class="results-count" aria-live="polite"></span>
+            <button class="link-btn" id="reset-search" type="button" data-i18n="issues.reset" hidden>Réinitialiser</button>
+          </div>
+        </div>
+
+        <div id="volumes" class="volumes"></div>
+
+        <div class="empty" id="empty-state" hidden>
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.6"/><path d="M15.7 15.7 21 21"/></svg>
+          <p id="empty-title">Aucun article ne correspond à votre recherche.</p>
+          <p class="empty-hint" id="empty-hint">Essayez un autre mot-clé ou réinitialisez les filtres.</p>
+          <button class="btn btn-ghost" id="empty-reset" type="button" data-i18n="issues.reset">Réinitialiser</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= COMMITTEE ================= -->
+    <section class="section" id="comite">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="kicker" data-i18n="committee.kicker">La rédaction</p>
+          <h2 data-i18n="committee.title">Comité éditorial</h2>
+          <p class="section-lead" data-i18n="committee.lead">
+            Une équipe éditoriale issue de plusieurs universités algériennes.
+          </p>
+        </header>
+        <div class="committee-grid" id="committee"></div>
+      </div>
+    </section>
+
+    <!-- ================= SUBMISSION ================= -->
+    <section class="section section-alt" id="soumission">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="kicker" data-i18n="submission.kicker">Publier</p>
+          <h2 data-i18n="submission.title">Soumettre un article</h2>
+          <p class="section-lead" data-i18n="submission.lead">
+            La revue accueille des articles inédits en français ou en anglais.
+          </p>
+        </header>
+
+        <div class="submit-grid">
+          <ol class="guide-list">
+            <li data-i18n="submission.g1">Langues : français ou anglais. Résumé de 150 mots maximum et 5 mots-clés.</li>
+            <li data-i18n="submission.g2">Mise en forme : Times New Roman 12, interligne 1,15 ; titres numérotés.</li>
+            <li data-i18n="submission.g3">Page de titre : titre bilingue, auteurs, affiliations, courriels et dates.</li>
+            <li data-i18n="submission.g4">Tableaux et figures numérotés, titrés et sourcés.</li>
+            <li data-i18n="submission.g5">Dépôt et suivi via la plateforme ASJP.</li>
+          </ol>
+
+          <aside class="submit-aside">
+            <dl class="mini-stats">
+              <div>
+                <dt data-i18n="submission.acceptance">Taux d’acceptation</dt>
+                <dd>97%</dd>
+              </div>
+              <div>
+                <dt data-i18n="submission.response">Délai moyen de réponse</dt>
+                <dd>77 <span data-i18n="submission.days">jours</span></dd>
+              </div>
+              <div>
+                <dt data-i18n="submission.publication">Publication après acceptation</dt>
+                <dd>61 <span data-i18n="submission.days">jours</span></dd>
+              </div>
+            </dl>
+
+            <a class="btn btn-primary btn-block" id="asjp-submit" href="https://www.asjp.cerist.dz/en/PresentationRevue/921" target="_blank" rel="noopener" data-i18n="submission.cta">
+              Soumettre sur ASJP
+            </a>
+
+            <div class="template-card">
+              <h3 data-i18n="submission.templateTitle">Prêt à rédiger ?</h3>
+              <p data-i18n="submission.templateLead">
+                Téléchargez le template officiel et le guide aux auteurs.
+              </p>
+              <div class="template-links">
+                <a class="btn btn-ghost" href="pdf/revue/template-auteur.pdf" download data-i18n="submission.templateCta">
+                  Télécharger le template
+                </a>
+                <a class="link-btn" href="pdf/revue/guide-auteurs.pdf" target="_blank" rel="noopener" data-i18n="submission.guideCta">
+                  Lire le guide aux auteurs
+                </a>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section class="section" id="contact">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="kicker" data-i18n="contact.kicker">Nous joindre</p>
+          <h2 data-i18n="contact.title">Contact</h2>
+          <p class="section-lead" data-i18n="contact.lead">
+            Pour toute question éditoriale, une soumission ou une demande de partenariat.
+          </p>
+        </header>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <span class="contact-label" data-i18n="contact.email">Courriel de la rédaction</span>
+            <a class="contact-value" href="mailto:soumiacr@yahoo.fr">soumiacr@yahoo.fr</a>
+            <span class="contact-sub" data-i18n="contact.editor">Rédaction en chef</span>
+            <span class="contact-sub">Soumia CHENTOUF</span>
+          </div>
+
+          <div class="contact-card">
+            <span class="contact-label" data-i18n="contact.address">Adresse</span>
+            <p class="contact-value contact-value--sm" id="contact-address">
+              Faculté des Lettres et Langues, Département de Langue et Littérature Françaises,
+              Université Mustapha Stambouli, Mascara 29000, Algérie
+            </p>
+          </div>
+
+          <a class="contact-card contact-card--link" href="https://www.asjp.cerist.dz/en/PresentationRevue/921" target="_blank" rel="noopener">
+            <span class="contact-label" data-i18n="contact.asjp">Plateforme ASJP</span>
+            <span class="contact-value contact-value--sm" data-i18n="contact.platform">Consulter la revue sur ASJP</span>
+            <span class="contact-arrow" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </a>
+
+          <a class="contact-card contact-card--link" href="https://www.univ-mascara.dz" target="_blank" rel="noopener">
+            <span class="contact-label" data-i18n="contact.university">Université Mustapha Stambouli</span>
+            <span class="contact-value contact-value--sm">univ-mascara.dz</span>
+            <span class="contact-arrow" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div class="footer-brand">
+        <a class="brand brand--footer" href="#accueil">
+          <span class="brand-mark" aria-hidden="true"><span>CRSL</span></span>
+          <span class="brand-text">
+            <strong>Cahiers de Recherches en Sciences du Langage</strong>
+            <span data-i18n="footer.institution">Université Mustapha Stambouli de Mascara · Faculté des Lettres et Langues</span>
+          </span>
+        </a>
+        <p class="footer-issn" data-i18n="footer.issn">ISSN 2992-0302 · EISSN 2992-0647</p>
+        <p class="footer-open"><span class="dot" aria-hidden="true"></span><span data-i18n="footer.open">Accès libre</span></p>
+      </div>
+
+      <nav class="footer-col" aria-labelledby="footer-nav-title">
+        <h4 id="footer-nav-title" data-i18n="footer.navigation">Navigation</h4>
+        <a href="#a-propos" data-i18n="nav.about">La revue</a>
+        <a href="#numeros" data-i18n="nav.issues">Numéros</a>
+        <a href="#comite" data-i18n="nav.committee">Comité</a>
+        <a href="#soumission" data-i18n="nav.submission">Soumettre</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+      </nav>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer.resources">Ressources</h4>
+        <a href="pdf/revue/presentation.pdf" target="_blank" rel="noopener">Présentation</a>
+        <a href="pdf/revue/fiche-technique.pdf" target="_blank" rel="noopener">Fiche technique</a>
+        <a href="pdf/revue/guide-auteurs.pdf" target="_blank" rel="noopener">Guide aux auteurs</a>
+        <a href="pdf/revue/template-auteur.pdf" target="_blank" rel="noopener">Template d’article</a>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <p>© <span id="year">2026</span> CRSL · <span data-i18n="footer.rights">Tous droits réservés.</span></p>
+      <p>Université Mustapha Stambouli de Mascara</p>
+    </div>
+  </footer>
+
+  <!-- ================= PDF VIEWER ================= -->
+  <div class="viewer" id="viewer" hidden>
+    <div class="viewer-backdrop" id="viewer-backdrop"></div>
+    <div class="viewer-panel" role="dialog" aria-modal="true" aria-labelledby="viewer-title">
+      <div class="viewer-bar">
+        <div class="viewer-info">
+          <span class="tag tag-pdf">PDF</span>
+          <div>
+            <h3 id="viewer-title">Lecteur PDF</h3>
+            <p id="viewer-sub"></p>
+          </div>
+        </div>
+        <div class="viewer-tools">
+          <a class="btn btn-ghost btn-sm" id="viewer-open" href="#" target="_blank" rel="noopener" data-i18n="viewer.openTab">
+            Ouvrir dans un onglet
+          </a>
+          <a class="btn btn-primary btn-sm" id="viewer-dl" href="#" download data-i18n="viewer.download">
+            Télécharger
+          </a>
+          <button class="icon-btn" id="viewer-close" type="button" aria-label="Fermer le lecteur" data-i18n-aria="viewer.close">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="viewer-stage">
+        <iframe id="viewer-frame" title="Lecteur PDF"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
