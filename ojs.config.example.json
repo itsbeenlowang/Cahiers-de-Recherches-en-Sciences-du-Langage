@@ -1,0 +1,7 @@
+{
+  "baseUrl": "https://ojs.example.org",
+  "journalPath": "crsl",
+  "metadataPrefix": "oai_dc",
+  "out": "assets/js/data.ojs.js",
+  "maxPages": 200
+}

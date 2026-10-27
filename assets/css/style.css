@@ -1682,18 +1682,38 @@ html[data-theme="light"] .tag-soon {
 }
 
 .committee-mail {
-  margin-block-start: auto;
-  padding-block-start: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  align-self: flex-start;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-text);
   font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
   color: var(--accent);
+  text-align: start;
   overflow-wrap: anywhere;
   transition: color .18s var(--ease);
+}
+
+.committee-mail .ico {
+  width: 13px;
+  height: 13px;
 }
 
 .committee-mail:hover {
   color: var(--accent-strong);
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+.mail-gate--compact {
+  margin-block-start: auto;
+  padding-block-start: 16px;
 }
 
 .submit-grid {
@@ -1809,6 +1829,27 @@ html[data-theme="light"] .template-card {
   margin-block-start: 14px;
 }
 
+.ojs-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-block-start: 12px;
+}
+
+.ojs-dot {
+  font-size: 12px;
+  color: var(--faint);
+}
+
+.ojs-note {
+  margin-block-start: 9px;
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--faint);
+  max-width: 46ch;
+}
+
 .contact-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
@@ -1838,6 +1879,39 @@ html[data-theme="light"] .template-card {
   border-color: var(--accent-line);
   background: var(--glass-2);
   transform: translateY(-3px);
+}
+
+.contact-card--wide {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  min-height: 0;
+  padding-block: 18px;
+  padding-inline-end: 64px;
+}
+
+.contact-card--wide .contact-label { flex: 0 0 auto; }
+
+.contact-card--wide .contact-value {
+  max-width: 60ch;
+  margin: 0;
+}
+
+.contact-card--wide .contact-arrow {
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+}
+
+@media (max-width: 640px) {
+  .contact-card--wide {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    min-height: 0;
+    padding: 20px;
+    padding-inline-end: 58px;
+  }
 }
 
 .contact-label {
@@ -2557,6 +2631,203 @@ html[dir="rtl"] .article-abstract {
   .viewer-info h3 { font-size: 13px; }
 
   .viewer-tools .btn-sm { padding: 0 12px; }
+}
+
+/* ---------- Contact gate: emails stay hidden until the visitor asks ---------- */
+
+.mail-gate {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  margin-block-start: 4px;
+}
+
+.btn-mail { max-width: 100%; }
+
+.btn-mail .ico {
+  width: 14px;
+  height: 14px;
+}
+
+.mail-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mail-progress {
+  display: none;
+  width: 100%;
+  height: 2px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--line);
+}
+
+.mail-gate.is-waiting .mail-progress { display: block; }
+
+.mail-progress i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: mail-fill 2s linear forwards;
+}
+
+html[dir="rtl"] .mail-progress i { transform-origin: right center; }
+
+@keyframes mail-fill {
+  to { transform: scaleX(1); }
+}
+
+.mail-reveal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  animation: mail-in .38s var(--ease) both;
+}
+
+.mail-reveal[hidden] { display: none; }
+
+.mail-address {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -.03em;
+  color: var(--text);
+  overflow-wrap: anywhere;
+  transition: color .18s var(--ease);
+}
+
+.mail-address:hover { color: var(--accent-strong); }
+
+.mail-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 11px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  background: var(--glass);
+  font-family: var(--font-text);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--muted);
+  white-space: nowrap;
+  transition:
+    color .18s var(--ease),
+    border-color .18s var(--ease),
+    background .18s var(--ease);
+}
+
+.mail-copy:hover {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+
+.mail-copy .ico {
+  width: 13px;
+  height: 13px;
+}
+
+.mail-copy.is-copied {
+  border-color: rgba(48, 209, 88, .45);
+  background: rgba(48, 209, 88, .14);
+  color: var(--ok);
+}
+
+html[data-theme="light"] .mail-copy.is-copied {
+  border-color: rgba(29, 154, 75, .4);
+  background: rgba(29, 154, 75, .1);
+}
+
+.mail-copy--sm {
+  height: 26px;
+  padding: 0 9px;
+  font-size: 10.5px;
+}
+
+.mail-reveal--compact { gap: 8px; }
+
+.contact-gate-hint {
+  margin-block-start: 2px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.mail-gate.is-revealed ~ .contact-gate-hint { display: none; }
+
+@keyframes mail-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.footer-owner {
+  flex: 1 0 100%;
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .committee-mail { padding-block: 6px; }
+
+  .ojs-links { gap: 6px 10px; }
+
+  .ojs-links .link-btn { padding-block: 7px; }
+
+  .mail-copy {
+    height: 36px;
+    padding-inline: 13px;
+    font-size: 12px;
+  }
+
+  .mail-copy--sm {
+    height: 32px;
+    padding-inline: 11px;
+  }
+}
+
+@media (max-width: 560px) {
+  .brand--footer .brand-text { display: flex; }
+
+  .brand--footer .brand-text strong {
+    max-width: 100%;
+    white-space: normal;
+    font-size: 12.5px;
+  }
+
+  .brand--footer .brand-text span {
+    max-width: 100%;
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 420px) {
+  .btn-mail {
+    padding-inline: 15px;
+    font-size: 12.5px;
+  }
+
+  .mail-address { font-size: 17px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

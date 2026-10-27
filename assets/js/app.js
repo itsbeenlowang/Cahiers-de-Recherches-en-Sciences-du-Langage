@@ -22,6 +22,12 @@
     lastFocus: null
   };
 
+  /* Contact gate: no address is written into the page until the visitor
+     clicks a contact button and waits two seconds. */
+  var mail = {
+    gates: Object.create(null)
+  };
+
   var $ = function (sel, root) { return (root || document).querySelector(sel); };
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
 
@@ -143,6 +149,7 @@
 
     applyStaticTranslations();
     renderAll();
+    announce("");
 
     setTheme(state.theme, false);
 
@@ -437,6 +444,296 @@
     return html;
   }
 
+  /* ---------- Contact gate ---------- */
+
+  var COPY_ICON =
+    '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">' +
+    '<rect x="8" y="8" width="14" height="14" rx="2.4"/>' +
+    '<path d="M16 4.8A2.8 2.8 0 0 0 13.2 2H5.8A2.8 2.8 0 0 0 3 4.8v7.4A2.8 2.8 0 0 0 5.8 15"/>' +
+    "</svg>";
+
+  function decodeMail(value) {
+    var raw = String(value == null ? "" : value).trim();
+    if (!raw) return "";
+    if (raw.indexOf("@") !== -1) return raw;
+    try {
+      var out = atob(raw);
+      return out.indexOf("@") !== -1 ? out : raw;
+    } catch (e) {
+      return raw;
+    }
+  }
+
+  function encodeMail(value) {
+    var email = decodeMail(value);
+    if (!email) return "";
+    try { return btoa(email); } catch (e) { return ""; }
+  }
+
+  function announce(message) {
+    var el = $("#mail-status");
+    if (el) el.textContent = message;
+  }
+
+  function gateIsCompact(gate) {
+    return gate.classList.contains("mail-gate--compact");
+  }
+
+  function gateLabel(gate) {
+    return t(gateIsCompact(gate) ? "committee.email" : "contact.reveal");
+  }
+
+  function gateState(gate) {
+    var id = gate && gate.getAttribute("data-gate");
+    if (!id) return null;
+    if (!mail.gates[id]) {
+      mail.gates[id] = { state: "locked", seconds: 0, timer: null, ticker: null };
+    }
+    return mail.gates[id];
+  }
+
+  function liveGate(gate) {
+    var id = gate && gate.getAttribute("data-gate");
+    if (!id) return gate;
+    if (gate.isConnected) return gate;
+
+    var found = $$("[data-mail]").filter(function (item) {
+      return item.getAttribute("data-gate") === id;
+    })[0];
+    return found || null;
+  }
+
+  function paintGate(gate) {
+    var email = decodeMail(gate.getAttribute("data-mail"));
+    if (!email) return;
+
+    var item = gateState(gate);
+    var trigger = $("[data-mail-reveal]", gate);
+    var reveal = $(".mail-reveal", gate);
+    var compact = gateIsCompact(gate);
+    var status = item ? item.state : "locked";
+
+    if (status === "revealed") {
+      if (trigger) {
+        trigger.hidden = true;
+        trigger.setAttribute("aria-expanded", "true");
+        trigger.setAttribute("aria-disabled", "false");
+        var base = $(".mail-label", trigger);
+        if (base) base.textContent = gateLabel(gate);
+      }
+      if (reveal) {
+        if (!reveal.firstChild) {
+          reveal.innerHTML =
+            '<a class="' + (compact ? "committee-mail committee-mail--link" : "mail-address") +
+            '" href="mailto:' + esc(email) + '" dir="ltr">' + esc(email) + "</a>" +
+            '<button class="mail-copy' + (compact ? " mail-copy--sm" : "") +
+            '" type="button" data-copy-mail>' + COPY_ICON +
+            '<span data-i18n="contact.copy">' + esc(t("contact.copy")) + "</span></button>";
+        }
+        reveal.hidden = false;
+      }
+      gate.classList.remove("is-waiting");
+      gate.classList.add("is-revealed");
+      return;
+    }
+
+    if (trigger) {
+      trigger.hidden = false;
+      trigger.setAttribute("aria-disabled", status === "waiting" ? "true" : "false");
+      trigger.setAttribute("aria-expanded", "false");
+      var label = $(".mail-label", trigger);
+      if (label) {
+        label.textContent = status === "waiting"
+          ? (compact ? t("contact.waitShort", { n: item.seconds }) : t("contact.waiting", { n: item.seconds }))
+          : gateLabel(gate);
+      }
+    }
+    if (reveal) reveal.hidden = true;
+    gate.classList.remove("is-revealed");
+    gate.classList.toggle("is-waiting", status === "waiting");
+  }
+
+  function paintGates() {
+    $$("[data-mail]").forEach(paintGate);
+  }
+
+  function startGate(gate) {
+    if (!gate) return;
+
+    var item = gateState(gate);
+    if (!item || item.state === "revealed" || item.state === "waiting") return;
+
+    item.state = "waiting";
+    item.seconds = 2;
+    paintGate(gate);
+    announce(t("contact.waitingStatus", { n: item.seconds }));
+
+    item.ticker = setInterval(function () {
+      item.seconds = Math.max(0, item.seconds - 1);
+      var current = liveGate(gate);
+      if (item.seconds > 0 && current) {
+        paintGate(current);
+        announce(t("contact.waitingStatus", { n: item.seconds }));
+      }
+    }, 1000);
+
+    item.timer = setTimeout(function () {
+      clearInterval(item.ticker);
+      item.ticker = null;
+      item.timer = null;
+      item.state = "revealed";
+
+      var current = liveGate(gate);
+      if (!current) return;
+
+      paintGate(current);
+      announce(t("contact.revealed"));
+
+      var link = $(".mail-address, .committee-mail--link", current);
+      if (link) {
+        try { link.focus({ preventScroll: true }); } catch (e) { link.focus(); }
+      }
+    }, 2000);
+  }
+
+  function legacyCopy(text) {
+    var area = document.createElement("textarea");
+    area.value = text;
+    area.setAttribute("readonly", "");
+    area.style.position = "fixed";
+    area.style.top = "-1000px";
+    area.style.opacity = "0";
+    document.body.appendChild(area);
+    area.select();
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+    document.body.removeChild(area);
+    return ok;
+  }
+
+  function copyText(text) {
+    return new Promise(function (resolve, reject) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(resolve, function () {
+          if (legacyCopy(text)) resolve(); else reject();
+        });
+        return;
+      }
+      if (legacyCopy(text)) resolve(); else reject();
+    });
+  }
+
+  function flashCopied(button) {
+    var label = $("span", button);
+    button.classList.add("is-copied");
+    if (label) label.textContent = t("contact.copied");
+
+    clearTimeout(button._copyTimer);
+    button._copyTimer = setTimeout(function () {
+      button.classList.remove("is-copied");
+      if (label) label.textContent = t("contact.copy");
+    }, 2000);
+  }
+
+  function bindMailGate() {
+    document.addEventListener("click", function (event) {
+      var trigger = event.target.closest ? event.target.closest("[data-mail-reveal]") : null;
+      if (trigger) {
+        event.preventDefault();
+        startGate(trigger.closest("[data-mail]"));
+        return;
+      }
+
+      var copy = event.target.closest ? event.target.closest("[data-copy-mail]") : null;
+      if (!copy) return;
+      event.preventDefault();
+
+      var gate = copy.closest("[data-mail]");
+      var email = decodeMail(gate ? gate.getAttribute("data-mail") : "");
+      if (!email) return;
+
+      copyText(email).then(function () {
+        flashCopied(copy);
+        announce(t("contact.copiedStatus"));
+      }, function () {
+        var link = gate && $("a", gate);
+        if (link && window.getSelection) {
+          var range = document.createRange();
+          range.selectNodeContents(link);
+          var selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+        announce(t("contact.copyManual"));
+      });
+    });
+  }
+
+  /* ---------- OJS editorial platform ---------- */
+
+  function ojsConfig() {
+    var cfg = DATA.meta && DATA.meta.ojs;
+    if (!cfg || !cfg.enabled || !cfg.url) return null;
+    return cfg;
+  }
+
+  function ojsUrl(kind) {
+    var cfg = ojsConfig();
+    if (!cfg) return "";
+
+    var base = String(cfg.url).replace(/\/+$/, "");
+    var path = String(cfg.journalPath || "").replace(/^\/+|\/+$/g, "");
+    var tail = String(cfg[kind] || "").replace(/^\/+|\/+$/g, "");
+    var url = base + (path ? "/index.php/" + path : "");
+
+    return tail ? url + "/" + tail : url;
+  }
+
+  function applyOjsLinks() {
+    var cfg = ojsConfig();
+    var links = $("#ojs-links");
+    var note = $("#ojs-note");
+    var card = $("#ojs-card");
+    var footer = $("#footer-ojs");
+
+    if (!cfg) {
+      if (links) links.hidden = true;
+      if (note) note.hidden = true;
+      if (card) card.hidden = true;
+      if (footer) footer.hidden = true;
+      return;
+    }
+
+    if (links) {
+      links.hidden = false;
+      $$("[data-ojs]", links).forEach(function (a) {
+        var href = ojsUrl(a.getAttribute("data-ojs"));
+        if (href) a.href = href;
+      });
+    }
+
+    if (note) note.hidden = false;
+
+    if (card) {
+      card.hidden = false;
+      card.href = ojsUrl("archive");
+    }
+
+    if (footer) {
+      footer.hidden = false;
+      footer.href = ojsUrl("dashboard");
+    }
+
+    var submit = $("#asjp-submit");
+    if (submit) {
+      submit.href = ojsUrl("submissions");
+      submit.textContent = t("submission.ojsCta");
+    }
+
+    var g5 = $('[data-i18n="submission.g5"]');
+    if (g5) g5.textContent = t("submission.g5Ojs");
+  }
+
   /* ---------- Committee ---------- */
 
   function roleLabel(role) {
@@ -454,8 +751,9 @@
     var host = $("#committee");
     if (!host) return;
 
-    host.innerHTML = DATA.committee.map(function (member) {
+    host.innerHTML = DATA.committee.map(function (member, index) {
       var roles = member.roles.map(roleLabel).join(" · ");
+      var email = decodeMail(member.email);
       var html = '<div class="committee-card">';
       html += '<span class="committee-avatar" aria-hidden="true">' + esc(initials(member.name)) + "</span>";
       html += '<p class="committee-role">' + esc(roles) + "</p>";
@@ -463,8 +761,18 @@
       if (member.affiliation) {
         html += '<p class="committee-aff">' + esc(member.affiliation) + "</p>";
       }
-      html += '<a class="committee-mail" href="mailto:' + esc(member.email) + '">' +
-        esc(member.email) + "</a>";
+      html += '<div class="mail-gate mail-gate--compact" data-mail="' + esc(encodeMail(email)) +
+        '" data-gate="committee-' + index + '">';
+      html += '<button class="committee-mail" type="button" data-mail-reveal aria-expanded="false"' +
+        ' aria-label="' + esc(t("committee.emailAria", { name: member.name })) + '">' +
+        '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">' +
+        '<rect x="2" y="4" width="20" height="16" rx="2.5"/>' +
+        '<path d="m22 7-8.9 5.7a2 2 0 0 1-2.2 0L2 7"/></svg>' +
+        '<span class="mail-label" data-i18n="committee.email">' + esc(t("committee.email")) + "</span>" +
+        "</button>";
+      html += '<span class="mail-progress" aria-hidden="true"><i></i></span>';
+      html += '<div class="mail-reveal mail-reveal--compact" hidden></div>';
+      html += "</div>";
       html += "</div>";
       return html;
     }).join("");
@@ -666,6 +974,8 @@
     renderFilters();
     renderVolumes();
     renderCommittee();
+    paintGates();
+    applyOjsLinks();
   }
 
   function init() {
@@ -689,6 +999,7 @@
     bindSearch();
     bindNav();
     bindReveal();
+    bindMailGate();
 
     var select = $("#lang");
     if (select) {

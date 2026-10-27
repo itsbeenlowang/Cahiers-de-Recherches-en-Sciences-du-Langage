@@ -2,6 +2,11 @@
    CRSL - Cahiers de Recherches en Sciences du Langage
    Journal content. Edit this file to add or update articles.
    Hero/section UI strings live in i18n.js.
+
+   Emails are stored base64 encoded (btoa) so that no plain
+   address sits in the page source. The site decodes them only
+   after the visitor unlocks the 2 second contact gate.
+   Plain addresses still work: app.js accepts both forms.
    ============================================================ */
 
 window.CRSL_DATA = {
@@ -14,9 +19,30 @@ window.CRSL_DATA = {
     },
     issn: "2992-0302",
     eissn: "2992-0647",
-    email: "soumiacr@yahoo.fr",
+    email: "c291bWlhY3JAeWFob28uZnI=",
     asjp: "https://www.asjp.cerist.dz/en/PresentationRevue/921",
     universityUrl: "https://www.univ-mascara.dz",
+    /* ------------------------------------------------------------
+       OJS (Open Journal Systems) editorial platform.
+       The public site keeps this premium front end; OJS handles
+       submissions, peer review, the author dashboard and the
+       OAI-PMH archive. Fill in `url` (installation root) and
+       `journalPath` (the short path under /index.php/), then set
+       `enabled: true`. No link is shown while enabled is false.
+
+       Example: https://ojs.example.org/index.php/crsl
+       -> url: "https://ojs.example.org", journalPath: "crsl"
+       ------------------------------------------------------------ */
+    ojs: {
+      enabled: false,
+      url: "",
+      journalPath: "crsl",
+      submissions: "about/submissions",
+      login: "login",
+      dashboard: "submissions",
+      archive: "issue/archive",
+      oai: "oai"
+    },
     founded: 2023,
     acceptance: "97%",
     responseDays: 77,
@@ -398,31 +424,31 @@ window.CRSL_DATA = {
       name: "Soumia CHENTOUF",
       roles: ["editorInChief", "secretary"],
       affiliation: "Université Mustapha Stambouli de Mascara",
-      email: "soumiacr@yahoo.fr"
+      email: "c291bWlhY3JAeWFob28uZnI="
     },
     {
       name: "Abdelkrim BENSELIM",
       roles: ["associateEditor"],
       affiliation: "Université de Aïn Témouchent",
-      email: "benslim2012.abdelkrim@gmail.com"
+      email: "YmVuc2xpbTIwMTIuYWJkZWxrcmltQGdtYWlsLmNvbQ=="
     },
     {
       name: "Belkacem BOUMEDINI",
       roles: ["associateEditor"],
       affiliation: "Université de Mascara",
-      email: "bboumedini70@yahoo.fr"
+      email: "YmJvdW1lZGluaTcwQHlhaG9vLmZy"
     },
     {
       name: "Souad BAHRI",
       roles: ["associateEditor"],
       affiliation: "Université de Aïn Témouchent",
-      email: "souad.bahri@univ-temouchent.edu.dz"
+      email: "c291YWQuYmFocmlAdW5pdi10ZW1vdWNoZW50LmVkdS5keg=="
     },
     {
       name: "Hadjer MERBOUH",
       roles: ["associateEditor"],
       affiliation: "",
-      email: "hadjer.merbouh@yahoo.fr"
+      email: "aGFkamVyLm1lcmJvdWhAeWFob28uZnI="
     }
   ],
 
